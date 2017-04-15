@@ -1,11 +1,19 @@
 package com.Twilighce.registration.model;
 
-import com.Twilighce.registration.service.UserManager;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+import com.bjsxt.registration.service.impl.UserManagerImpl;
+
+//ƶѪģ�� ��Ѫģ��
+@Entity
 public class User {
 	private int id;
 	private String username;
 	private String password;
+	@Id
+	@GeneratedValue
 	public int getId() {
 		return id;
 	}
