@@ -1,4 +1,6 @@
 <%@ page language="java" import="java.util.*, java.sql.*" pageEncoding="GB18030"%>
+<%@ page import="com.Twilighce.registration.service.*" %>
+<%@ page import="com.Twilighce.registration.model.*" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -6,34 +8,21 @@ String username = request.getParameter("username");
 String password = request.getParameter("password");
 String password2 = request.getParameter("password2");
 
-// 拿到数据库连接
+User u = new User();
+u.setUsername(username);
+u.setPassword(password);
 Class.forName("com.mysql.jdbc.Driver");
 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/spring", "root", "bjsxt");
 
-// 构建 sql 语句
-String sqlQuery = "select count(*) from user where username = ?";
-PreparedStatement psQuery = conn.prepareStatement(sqlQuery);
-psQuery.setString(1, username);
-ResultSet rs = psQuery.executeQuery();
-rs.next();
-int count = rs.getInt(1);
-
-// 如果存在，跳转到  registerFail.jap
-if(count > 0) {
+// 把查询 user 是否存在，和添加 user 的方法，封装到了 UserManager 中
+UserManager um = new UserManager();
+boolean exist = um.exists(u);
+if(exist) {
 	response.sendRedirect("registerFail.jsp");
-	psQuery.close();
-	conn.close();
 	return;
 }
 
-String sql = "insert into user values (null, ?, ?)";
-PreparedStatement ps = conn.prepareStatement(sql);
-ps.setString(1, username);
-ps.setString(2, password);
-ps.executeUpdate();
-ps.close();
-conn.close();
-
+um.add(u);
 response.sendRedirect("registerSuccess.jsp");
 %>
 
