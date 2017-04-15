@@ -11,11 +11,11 @@ import com.Twilighce.registration.model.User;
 public class UserManager {
 	public boolean exists(User u) throws Exception {
 		
-		// Á¬ÉÏÊı¾İ¿â
+		// è¿ä¸Šæ•°æ®åº“
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/spring", "root", "bjsxt");
 
-		// ²éÑ¯
+		// æŸ¥è¯¢
 		String sqlQuery = "select count(*) from user where username = ?";
 		PreparedStatement psQuery = conn.prepareStatement(sqlQuery);
 		psQuery.setString(1, u.getUsername());
