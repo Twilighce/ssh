@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*, java.sql.*" pageEncoding="GB18030"%>
-<%@ page import="com.bjsxt.registration.service.*" %>
-<%@ page import="com.bjsxt.registration.model.*" %>
-<%@ page import="com.bjsxt.registration.service.impl.*" %>
+<%@ page import="com.Twilighce.registration.service.*" %>
+<%@ page import="com.Twilighce.registration.model.*" %>
+<%@ page import="com.Twilighce.registration.service.impl.*" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -13,7 +13,7 @@ User u = new User();
 u.setUsername(username);
 u.setPassword(password);
 Class.forName("com.mysql.jdbc.Driver");
-Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/spring", "root", "bjsxt");
+Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/spring", "root", "Twilighce");
 
 UserManager um = new UserManagerImpl();
 boolean exist = um.exists(u);
