@@ -13,7 +13,7 @@ User u = new User();
 u.setUsername(username);
 u.setPassword(password);
 Class.forName("com.mysql.jdbc.Driver");
-Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/spring", "root", "Twilighce");
+Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/spring", "root", "bjsxt");
 
 UserManager um = new UserManagerImpl();
 boolean exist = um.exists(u);

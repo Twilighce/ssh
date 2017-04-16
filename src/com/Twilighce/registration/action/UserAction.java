@@ -1,10 +1,11 @@
 package com.Twilighce.registration.action;
 
+import org.springframework.context.ApplicationContext;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.Twilighce.registration.model.User;
-
-
 import com.Twilighce.registration.service.UserManager;
-import com.Twilighce.registration.service.impl.UserManagerImpl;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UserAction extends ActionSupport {
@@ -13,8 +14,13 @@ public class UserAction extends ActionSupport {
 	private String password;
 	private String password2;
 	
-	UserManager um = new UserManagerImpl();
-
+	private UserManager um;
+	
+	public UserAction() {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
+		um = (UserManager)ctx.getBean("userManager");
+	}
+	
 	public UserManager getUm() {
 		return um;
 	}

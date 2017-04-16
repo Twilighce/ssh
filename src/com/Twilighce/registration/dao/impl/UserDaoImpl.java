@@ -1,33 +1,42 @@
-package com.Twilighce.registration.dao.impl;
+ package com.Twilighce.registration.dao.impl;
 
-import org.hibernate.SessionFactory;
+import java.util.List;
 
-import org.hibernate.classic.Session;
+import javax.annotation.Resource;
 
-import com.Twilighce.registration.dao.UserDao;
-import com.Twilighce.registration.model.User;
-import com.Twilighce.registration.util.HibernateUtil;
+import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.stereotype.Component;
 
+import com.bjsxt.registration.dao.UserDao;
+import com.bjsxt.registration.model.User;
+
+@Component("userDao")
 public class UserDaoImpl implements UserDao {
-
+	
+	private HibernateTemplate hibernateTemplate; 
 	public void save(User u) {
-		SessionFactory sf = HibernateUtil.getSessionFactory();
-		Session s = sf.getCurrentSession();
-		s.beginTransaction();
-		s.save(u);
-		s.getTransaction().commit();
+		hibernateTemplate.save(u);
+		
 	}
 
 	public boolean checkUserExistsWithName(String username) {
-		SessionFactory sf = HibernateUtil.getSessionFactory();
-		Session s = sf.getCurrentSession();
-		s.beginTransaction();
-		long count = (Long)s.createQuery("select count(*) from User u where u.username = :username")
-			.setString("username", username)
-			.uniqueResult();
-		s.getTransaction().commit();
-		if(count > 0) return true;
+		List<User> users = hibernateTemplate.find("from User u where u.username = '" + username + "'");
+		
+		
+		if(users != null && users.size() > 0) {
+			return true;
+		}
 		return false;
+	}
+
+	public HibernateTemplate getHibernateTemplate() {
+		return hibernateTemplate;
+	}
+	
+	@Resource
+	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+		this.hibernateTemplate = hibernateTemplate;
 	}
 
 }
