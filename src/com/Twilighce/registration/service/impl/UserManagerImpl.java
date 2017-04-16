@@ -1,7 +1,9 @@
 package com.Twilighce.registration.service.impl;
 
-import javax.annotation.Resource;
+import java.util.List;
 
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,7 @@ public class UserManagerImpl implements UserManager {
 		return userDao;
 	}
 	
+	
 	@Resource
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
@@ -31,5 +34,15 @@ public class UserManagerImpl implements UserManager {
 	
 	public void add(User u) throws Exception {
 		userDao.save(u);
+	}
+
+	public List<User> getUsers() {
+		// TODO Auto-generated method stub
+		return this.userDao.getUsers();
+	}
+
+	public User loadById(int id) {
+		// TODO Auto-generated method stub
+		return this.userDao.loadById(id);
 	}
 }

@@ -1,6 +1,7 @@
- package com.Twilighce.registration.dao.impl;
+package com.Twilighce.registration.dao.impl;
 
 import java.util.List;
+
 
 import javax.annotation.Resource;
 
@@ -8,8 +9,8 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
-import com.bjsxt.registration.dao.UserDao;
-import com.bjsxt.registration.model.User;
+import com.Twilighce.registration.dao.UserDao;
+import com.Twilighce.registration.model.User;
 
 @Component("userDao")
 public class UserDaoImpl implements UserDao {
@@ -28,6 +29,11 @@ public class UserDaoImpl implements UserDao {
 			return true;
 		}
 		return false;
+		/*long count = (Long)hibernateTemplate.getSessionFactory()
+					.getCurrentSession().createQuery("select count(*) from User u where u.username = :username")
+					.setString("username", username).uniqueResult();
+		if(count > 0) return true;
+		return false;*/
 	}
 
 	public HibernateTemplate getHibernateTemplate() {
@@ -37,6 +43,16 @@ public class UserDaoImpl implements UserDao {
 	@Resource
 	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
 		this.hibernateTemplate = hibernateTemplate;
+	}
+
+	public List<User> getUsers() {
+		// TODO Auto-generated method stub
+		return (List<User>)this.hibernateTemplate.find("from User");
+	}
+
+	public User loadById(int id) {
+		
+		return (User)this.hibernateTemplate.load(User.class, id);
 	}
 
 }

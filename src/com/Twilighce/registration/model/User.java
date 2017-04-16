@@ -1,10 +1,11 @@
 package com.Twilighce.registration.model;
 
 import javax.persistence.Entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import com.bjsxt.registration.service.impl.UserManagerImpl;
+import com.Twilighce.registration.vo.UserRegisterInfo;
 
 //ƶѪģ�� ��Ѫģ��
 @Entity
@@ -32,5 +33,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	
 
 }

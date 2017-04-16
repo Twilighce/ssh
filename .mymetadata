@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="Spring_2800_Registration_6"
+  name="Spring_3300_Registration_11"
   id="myeclipse.1261121761656"
-  context-root="/Spring_2700_Registration_5"
+  context-root="/Spring_3300_Registration_11"
   j2ee-spec="5.0"
-  archive="Spring_2800_Registration_6.war">
+  archive="Spring_3300_Registration_11.war">
   <attributes>
     <attribute name="webrootdir" value="/WebRoot" />
   </attributes>

@@ -1,68 +1,95 @@
 package com.Twilighce.registration.action;
 
-import org.springframework.context.ApplicationContext;
+import java.util.List;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import javax.annotation.Resource;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.Twilighce.registration.model.User;
 import com.Twilighce.registration.service.UserManager;
+import com.Twilighce.registration.vo.UserRegisterInfo;
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
 
-public class UserAction extends ActionSupport {
+@Component("u")
+@Scope("prototype")
+public class UserAction extends ActionSupport implements ModelDriven {
 	
-	private String username;
-	private String password;
-	private String password2;
 	
-	private UserManager um;
+	private UserRegisterInfo info = new UserRegisterInfo();
 	
-	public UserAction() {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
-		um = (UserManager)ctx.getBean("userManager");
+	private UserManager userManager;
+	
+	private List<User> users;
+	
+	private User user;
+	
+	public UserAction(){
+		System.out.println("useraction created!");
 	}
 	
-	public UserManager getUm() {
-		return um;
-	}
-
-	public void setUm(UserManager um) {
-		this.um = um;
-	}
-
 	@Override
 	public String execute() throws Exception {
+		System.out.println(info.getUsername());
 		User u = new User();
-		u.setUsername(username);
-		u.setPassword(password);
-		if(um.exists(u)) {
+		u.setUsername(info.getUsername());
+		u.setPassword(info.getPassword());
+		if(userManager.exists(u)) {
 			return "fail";
 		}
-		um.add(u);
+		userManager.add(u);
 		return "success";
 	}
 
-	public String getUsername() {
-		return username;
+	public UserRegisterInfo getInfo() {
+		return info;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setInfo(UserRegisterInfo info) {
+		this.info = info;
+	}
+	
+	//@Override
+	public Object getModel() {
+		return info;
+	}
+	
+	public String list() {
+		this.users = this.userManager.getUsers();
+		return "list";
+	}
+	
+	public List<User> getUsers() {
+		return users;
 	}
 
-	public String getPassword() {
-		return password;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public String load() {
+		this.user = this.userManager.loadById(info.getId());
+		return "load";
 	}
 
-	public String getPassword2() {
-		return password2;
+	public User getUser() {
+		return user;
 	}
 
-	public void setPassword2(String password2) {
-		this.password2 = password2;
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public UserManager getUserManager() {
+		return userManager;
+	}
+	
+	@Resource
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
 	}
 	
 }
