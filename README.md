@@ -17,6 +17,7 @@ Spring + Struts2 + Hibernate
 
 - Model 中，两大层：
 
+
     - business 层：管理层（抽象的抽象层 UserManager、具体的实现层 UserManagerImpl）、实体层 User；
    
     - DAO 层：抽象层、实现层。DAO 负责和数据库打交道。
