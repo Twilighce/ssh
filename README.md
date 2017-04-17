@@ -1,5 +1,5 @@
 # ssh
-Spring + Struts2 + Hibernate
+Spring + Struts2 + Hibernate。主要实现用户注册与登录功能。
 
 项目结构如下：
 
